@@ -1,3 +1,17 @@
+// logic for getting user input by clicking on button
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach(btn => btn.addEventListener('click', chooseButton));
+
+function chooseButton(e) {
+    const playerChoise = this.classList.value;
+    const computerChoise = computerPlay();
+    const newResult = playRound(playerChoise, computerChoise);
+    updateResult(newResult);
+    updateGameStatus(newResult);
+}
+
 // logic for rendering and updating game status
 
 const textContainer = document.querySelector('.text-container');
@@ -17,28 +31,26 @@ function updateGameStatus(result) {
 
     if (result.includes('won')) {
         playerScore++;
+        if (playerScore >= 5) {
+            endTheGame('Congratulations! You\'ve beaten the machine!');
+        }
     }
     else if (result.includes('lost')) {
         computerScore++;
+        if (computerScore >= 5) {
+            endTheGame('Oh no! You lost! The machines have won!');
+        }
     }
 
     gameStatus.textContent = `Player: ${playerScore} Computer: ${computerScore}`;
 }
 
-
-// logic for getting user input by clicking on button
-
-const buttons = document.querySelectorAll('button');
-
-buttons.forEach(btn => btn.addEventListener('click', chooseButton));
-
-function chooseButton(e) {
-    const playerChoise = this.classList.value;
-    const computerChoise = computerPlay();
-    const newResult = playRound(playerChoise, computerChoise);
-    updateGameStatus(newResult);
-    updateResult(newResult);
+function endTheGame(message) {
+    result.textContent = message;
+    buttons.forEach(btn => btn.removeEventListener('click', chooseButton));
 }
+
+
 
 
 // rock-paper-scissors game logic
