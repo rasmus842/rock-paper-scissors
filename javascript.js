@@ -27,15 +27,15 @@ function updateResult(newResult) {
     result.textContent = newResult;
 }
 
-function updateGameStatus(result) {
+function updateGameStatus(newResult) {
 
-    if (result.includes('won')) {
+    if (newResult.includes('won')) {
         playerScore++;
         if (playerScore >= 5) {
             endTheGame('Congratulations! You\'ve beaten the machine!');
         }
     }
-    else if (result.includes('lost')) {
+    else if (newResult.includes('lost')) {
         computerScore++;
         if (computerScore >= 5) {
             endTheGame('Oh no! You lost! The machines have won!');
@@ -46,7 +46,7 @@ function updateGameStatus(result) {
 }
 
 function endTheGame(message) {
-    result.textContent = message;
+    updateResult(message);
     buttons.forEach(btn => btn.removeEventListener('click', chooseButton));
 }
 
